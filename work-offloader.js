@@ -8,6 +8,12 @@ import { config } from 'dotenv';
 config();
 const logsFolderLocation = join( process.cwd(), process.env.LOGS_LOC );
 
+/**
+ * Starts a new detached terminal and execute the command passed by the user
+ * @param {cmd | Terminal} command 
+ * @param {yes | no | y | n} createLog 
+ * @param {Integer} logExpire 
+ */
 export function startChildProcess({ command, createLog, logExpire }) {
 
     const uuidv4 = v4();
