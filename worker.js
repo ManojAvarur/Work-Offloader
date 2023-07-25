@@ -1,8 +1,6 @@
 import { exec } from 'child_process';
-import { error } from 'console';
 import { writeFileSync } from 'fs';
 import { join } from 'path';
-import { stderr } from 'process';
 
 const args = process.argv.slice(2);
 
@@ -11,14 +9,16 @@ const logsFolderLocation = args[1];
 const logFileName = args[2];
 const logWriteLocation = join( logsFolderLocation, logFileName );
 
-const data = { command, logsFolderLocation, logFileName, logWriteLocation };
+const data = { 'Currently Executing Command': command, 'Log File Name': logFileName };
 console.log( data );
 
 
 exec( command, ( error, stdout, stderr ) => {
-    writeFileSync( logWriteLocation, `${error} ${stdout} ${stderr}` );
-})
+    if( logFileName !== 'null' ){
+        error = ( error )? `Error : ${error.split('\n').join('\n\t')}` : '';
+        stdout = ( stdout )? `\n\nStdout : ${stdout.split('\n').join('\n\t')}` : '';
+        stderr = ( stderr )? `\n\nStderr : ${stderr.split('\n').join('\n\t')}` : '';
 
-
-
-// fetch('http://127.0.0.1/', { method: 'POST', body: JSON.stringify( data ) } ).then( () => {} )
+        writeFileSync( logWriteLocation, `Command : ${command} ${error} ${stdout} ${stderr}` );
+    }
+});

@@ -1,18 +1,19 @@
 import { spawn } from 'child_process';
 import { v4 } from 'uuid';
-import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import moment from 'moment';
+import { config } from 'dotenv';
 
-const logFolderName = 'Logs';
-const logsFolderLocation = join( process.cwd(), logFolderName );
+config();
+const logsFolderLocation = join( process.cwd(), process.env.LOGS_LOC );
 
 export function startChildProcess({ command, createLog, logExpire }) {
 
     const uuidv4 = v4();
     let logName = null;
 
-    if( createLog ){
+    if( ['yes', 'y'].includes( createLog.toLowerCase() ) ){
         logName = `${uuidv4}-${moment().unix()}-${moment().add(logExpire, 'h').unix()}.log`;
 
         if( !existsSync( logsFolderLocation ) ){
@@ -34,7 +35,6 @@ export function startChildProcess({ command, createLog, logExpire }) {
         }
     );
 
-    console.log( childArgs );
     childProcess.unref();
-    // console.log(`Process has been offloaded to a new terminal ${( createLog )? `< Log Id : ${uuidv4} >` : ``}`);
+    console.log(`\n\tProcess has been offloaded to a new terminal ${( createLog )? `< Log Id : ${uuidv4} >` : ``}\n`);
 }
