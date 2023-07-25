@@ -1,12 +1,20 @@
 {
-  "name": "work-offloader",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "work-offloader",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"start": "nodemon offloader.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"nodemon": "^3.0.1"
+	},
+	"dependencies": {
+		"commander": "^11.0.0",
+		"moment": "^2.29.4",
+		"uuid": "^9.0.0"
+	}
 }
