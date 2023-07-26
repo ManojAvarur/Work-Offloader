@@ -11,6 +11,8 @@ const logWriteLocation = join( logsFolderLocation, logFileName );
 
 const data = { 'Currently Executing Command': command, 'Log File Name': logFileName };
 
+writeFileSync( logWriteLocation, `Currently Executing Command : ${command}` );
+
 exec( command, ( error, stdout, stderr ) => {
     if( logFileName !== 'null' ){
         error = ( error?.message )? `\n\nError : ${error.message.split('\n').join('\n\t')}` : '';
