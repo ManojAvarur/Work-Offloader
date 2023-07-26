@@ -1,4 +1,4 @@
-import { readdirSync, unlinkSync, readFileSync } from 'fs';
+import { readdirSync, unlinkSync, readFileSync, existsSync } from 'fs';
 import { config } from 'dotenv';
 import { join } from 'path'
 import moment from 'moment';
@@ -13,6 +13,10 @@ const logsLocation = join( process.cwd(), process.env.LOGS_LOC );
  */
 export function retriveAllLogs(){
     const logsList = {};
+
+    if( !existsSync( logsLocation ) ){
+        return logsList
+    }
 
     readdirSync( logsLocation ).forEach( logCompleteName =>{ 
         const logNameSplit = logCompleteName.split('-');
@@ -29,7 +33,6 @@ export function retriveAllLogs(){
         logsList[logId] = { logCompleteName, createdDate, expireDate };
     });
 
-    
     return logsList;
 }
 
