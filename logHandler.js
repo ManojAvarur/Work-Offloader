@@ -3,6 +3,7 @@ import { config } from './settingsParser.js';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import moment from 'moment';
+import { question } from 'readline-sync';
 
 
 config();
@@ -51,6 +52,53 @@ export function displayLog( logId ){
     }
 
     console.log( '\n' + readFileSync( join( logsLocation, log.logCompleteName ) ).toString() );
+}
+
+/**
+ * Deletes the log for the specified log id
+ * @param {UUIDv4} logId 
+ */
+export function deleteLog( logId ){
+    const log = retriveAllLogs()[logId];
+
+    if( !log ){
+        console.log(`\n\t---- No log found < Log Id : ${logId} > ----`);
+        return;
+    }
+
+    const userInput = question('Are you sure you want to delete the log? [ yes | y | no | n ] : ');
+    const userResponse = ['yes', 'y'].includes( userInput.toLowerCase() );
+
+    if( !userResponse ){
+        console.log('\n\t---- Job aborted ----');
+        return;
+    }
+
+    unlinkSync( join( logsLocation, log.logCompleteName ) );
+}
+
+/**
+ * Deletes all the logs
+ */
+export function deleteAllLogs(){
+    const logsList = retriveAllLogs();
+
+    if( Object.keys( logsList ).length < 0 ){
+        console.log(`\n\t---- No log found < Log Id : ${logId} > ----`);
+        return;
+    }
+
+    const userInput = question('Are you sure you want to delete all the logs? [ yes | y | no | n ] : ');
+    const userResponse = ['yes', 'y'].includes( userInput.toLowerCase() );
+
+    if( !userResponse ){
+        console.log('\n\t---- Job aborted ----');
+        return;
+    }
+
+    Object.keys( logsList ).forEach( ( logId, index ) => {
+        unlinkSync( join( logsLocation, logsList[logId].logCompleteName ) );
+    });
 }
 
 /**
