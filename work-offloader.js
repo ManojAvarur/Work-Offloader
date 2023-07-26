@@ -4,9 +4,11 @@ import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import moment from 'moment';
 import { config } from 'dotenv';
+import { fileURLToPath } from 'url';
 
 config();
-const logsFolderLocation = join( process.cwd(), process.env.LOGS_LOC );
+const __dirname = fileURLToPath( new URL( '.', import.meta.url ) );
+const logsFolderLocation = join( __dirname, process.env.LOGS_LOC );
 
 /**
  * Starts a new detached terminal and execute the command passed by the user
