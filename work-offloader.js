@@ -3,12 +3,12 @@ import { v4 } from 'uuid';
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import moment from 'moment';
-import { config } from 'dotenv';
+import { config } from './settingsParser.js';
 import { fileURLToPath } from 'url';
 
 config();
 const __dirname = fileURLToPath( new URL( '.', import.meta.url ) );
-const logsFolderLocation = join( __dirname, process.env.LOGS_LOC );
+const logsFolderLocation = join( __dirname, process.localSettings.LOGS_LOC );
 
 /**
  * Starts a new detached terminal and execute the command passed by the user
