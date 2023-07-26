@@ -29,8 +29,8 @@ export function startChildProcess({ command, createLog, logExpire }) {
         }
     }
 
-    const childCommand = `node ${join(__dirname, 'worker.js')}`; 
-    const childArgs = [ `"${command}"`, `"${logsFolderLocation}"`, `"${logName}"` ]; 
+    const childCommand = `node`; 
+    const childArgs = [ `"${join(__dirname, 'worker.js')}"`, `"${command}"`, `"${logsFolderLocation}"`, `"${logName}"` ]; 
 
     // Spawn the child process
     const childProcess = spawn( 
