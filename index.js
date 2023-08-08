@@ -9,7 +9,7 @@ const options = program
     .description('This program can be used to offload a long processing work to a child process ( new terminal window ) which helps in keeping the parent terminal free for any other execution.')
     .version('1.0')
 
-    .option('-c, --command <command>', 'Command to execute')
+    .option('-c, --command <"command">', 'Command to execute')
     .option('-Cl, --create-log [yes / y / no / n]', 'Keep a log of the execution', 'yes')
     .option('-le, --log-expire [hours]', 'Log will be deleted after (default: 24 hours)', 24)
     .option('-ll, --list-logs', 'Lists all the logs')
@@ -23,7 +23,7 @@ const options = program
 if( options.command ){
     startChildProcess( options );
 } else if ( options.logDisplay ){
-    displayLog( options.displayLog );
+    displayLog( options.logDisplay );
 } else if ( options.deleteLog ){
     deleteLog( options.deleteLog )
 } else if (options.deleteAllLogs){
